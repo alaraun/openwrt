@@ -22,7 +22,7 @@
 	aliases {
 		led-boot = &led_user;
 		led-failsafe = &led_user;
-		led-running = &led_power;
+		led-running = &led_user;
 		led-upgrade = &led_user;
 	};
 
@@ -83,44 +83,44 @@
 		mode {
 			label = "mode";
 			gpios = <&tlmm 5 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_RFKILL>;
+			linux,code = <KEY_LIGHTS_TOGGLE>;
 		};
 	};
 
 	leds {
 		compatible = "gpio-leds";
 
-		led_power: power {
+		power {
 			label = "blue:power";
 			gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
 			default-state = "keep";
-			panic-indicator;
 		};
 
 		led_user: user {
 			label = "green:user";
 			gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
-		};
-
-		poeout {
-			label = "red:poeout";
-			gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
-			default-state = "keep";
 			panic-indicator;
 		};
 
 		wlan2g {
 			label = "green:wlan2g";
 			gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "phy0tpt";
 		};
 
 		wlan5g {
 			label = "green:wlan5g";
 			gpios = <&tlmm 58 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "phy1tpt";
 		};
 
+		eth1 {
+			label = "green:eth1";
+			gpios = <&ethphy4 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		eth2 {
+			label = "green:eth2";
+			gpios = <&ethphy3 1 GPIO_ACTIVE_HIGH>;
+		};
 	};
 };
 
@@ -221,16 +221,14 @@
 	status = "okay";
 };
 
-&ethphy0 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
+&ethphy3 {
+	gpio-controller;
+	#gpio-cells = <2>;
 };
 
-&ethphy1 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
+&ethphy4 {
+	gpio-controller;
+	#gpio-cells = <2>;
 };
 
 &wifi0 {
