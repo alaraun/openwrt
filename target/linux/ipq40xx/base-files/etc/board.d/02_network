@@ -17,7 +17,6 @@ ipq40xx_setup_interfaces()
 	engenius,emr3500|\
 	engenius,ens620ext|\
 	luma,wrtq-329acn|\
-	mikrotik,cap-ac|\
 	plasmacloud,pa1200|\
 	plasmacloud,pa2200)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
@@ -47,6 +46,10 @@ ipq40xx_setup_interfaces()
 	openmesh,a42|\
 	openmesh,a62)
 		ucidef_set_interfaces_lan_wan "eth1" "eth0"
+		;;
+	mikrotik,cap-ac)
+		ucidef_add_switch "switch0" \
+			"0t@eth0" "4:lan" "5:wan"
 		;;
 	asus,rt-ac58u|\
 	mikrotik,hap-ac2|\
